@@ -1,0 +1,36 @@
+***Notes: Whenever you see a ":" meaning it's a command you enter in command prompt. whenever you see a "/*" it's a comment. Whenever you see #### is a title, #1 is steps numbering***
+
+####Creating new python environment####
+#1 Open your command prompt.
+#2 :conda create -n py27 python=2.7 anaconda /*py27 is a name of the environment
+
+####Activating python environment and check python version####
+#1 :activate py27 /*you'll see your command prompt cursor changed to (py27)
+#2 :python -u /*you should be able to see Python 2.7.13 ....
+
+####Building Cocos2d in Windows(only tested in window 8)####
+###Clone Repository into SCCGroupProject###
+#1 :cd C://
+#2 :mkdir SCCGroupProject
+#3 :cd SCCGroupProject
+#4 :git clone https://github.com/cocos2d/cocos2d-x.git /*this clone is incompleted, if you notice, the folder which have weird strings like plugin @ 0fb74e5 or web @ 15704c3 when you checked on your folder plugin and web, they are empty. Hence you will have to git clone them one by one.
+#5 Those folder which are affected are "plugin, web, tools/binding-generator, cocos2d-console" /*make sure you git clone them all individually(one by one)
+###Download SDK, NDK and ANT###
+#1 download ndk from >> https://developer.android.com/ndk/downloads/index.html
+#2 download sdk from >> https://developer.android.com/studio/index.html /*download android studio, the sdk folder is located in user/AppData/Local/Android/Sdk
+#3 download Ant from >> https://ant.apache.org/bindownload.cgi /*version 1.10.1 should do
+#4 After download, copied and extract the Ndk and Ant Archieves in the SCCGroupProject Folder.
+###Running Cocos2d Setup.py###
+#1 :cd c://SCCGroupProject/cocos2d-x /*move to the cocos2d-x directory
+#2 :activate py27 /* activate the python 2.7 environment, the cocos2d requires python ver 2.7
+#3 :python Setup.py 
+#4 after the command, it will prompt you the root directory of sdk, ndk and Ant path. For NDK and Ant just use the path in the c://SCCGRoupProject folder you just extracted. For Sdk, use the path of the folder in Android Studio, eg: users/AppData/Local/Android/Sdk
+#5 after the configuration, restart your command prompt.
+###Build and Run Cocos###
+#1 :cd c://SCCGroupProject/cocos2d-x/tools/cocos2d-console/bin 
+#2 :activate py27 
+#3 :cocos /* if success you should see Available Command: ... ... ... Example: ... ...
+#4 Congratz ! Now you can follow the instruction on how to build a new project using cocos in >> https://github.com/cocos2d/cocos2d-x
+#5 Have fun
+
+Our Project on Github >> https://github.com/cocos2d/cocos2d-x
