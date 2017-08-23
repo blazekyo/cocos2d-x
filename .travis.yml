@@ -1,2 +1,3 @@
 language: json
-script: cocos2d-x/tests/performance-tests/.cocos-project.json
+script: 
+  -cocos2d-x/tests/performance-tests/.cocos-project.json
