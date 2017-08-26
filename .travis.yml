@@ -2,8 +2,6 @@ language: python
 python:
    - "2.7"
 install:
-   - 
-   - conda create -n py27 python=2.7 anaconda /*py27 is a name of the environment
 before_script:
    - mkdir cocosTest
    - cd cocosTest
