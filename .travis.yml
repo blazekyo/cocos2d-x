@@ -1,3 +1,4 @@
+dist: precise
 #!/bin/bash
 
 # exit this script if any commmand fails
