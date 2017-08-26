@@ -1,5 +1,6 @@
 language: cpp
-before_script:
+install:
+##SDK and NDK Dependencies
     - export NDK_VERSION=r10e
     - curl -L http://dl.google.com/android/ndk/android-ndk-${NDK_VERSION}-linux-x86_64.bin -O
     - chmod u+x android-ndk-${NDK_VERSION}-linux-x86_64.bin
@@ -7,15 +8,17 @@ before_script:
     - rm android-ndk-${NDK_VERSION}-linux-x86_64.bin
     - export ANDROID_NDK_HOME=`pwd`/android-ndk-${NDK_VERSION}
     - export PATH=${ANDROID_NDK_HOME}:${PATH}
-    -wget https://github.com/cocos2d/cocos2d-x/archive/cocos2d-x-2.1.5.zip 
-    -unzip cocos2d-x-2.1.5.zip
-    -cocos new MyGame -l cpp
-    -cd MyGame
-    -wget https://raw.githubusercontent.com/rafaelpierri/gtest-and-cocos2d-x-on-a-blender/master/gtestOnCocos2d.sh./gtestOnCocos2d.sh
+##Cocos Console Installation
+    - wget https://github.com/cocos2d/cocos2d-x/archive/cocos2d-x-2.1.5.zip 
+    - unzip cocos2d-x-2.1.5.zip
+before_script:
+   - cocos new MyGame -l cpp
+   - cd MyGame
+   - wget https://raw.githubusercontent.com/rafaelpierri/gtest-and-cocos2d-x-on-a-blender/master/gtestOnCocos2d.sh./gtestOnCocos2d.sh
+   - mkdir linux-build
+   - cd linux-build
+   - cmake -Ctest=ON ..
+   - enable_testing()
 script:
-   -mkdir linux-build
-   -cd linux-build
-   -cmake -Ctest=ON ..
-   -enable_testing()
-   -make 
-   -make test
+   - make 
+   - make test
