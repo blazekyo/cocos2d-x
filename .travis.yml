@@ -1,77 +1,140 @@
-language: cpp
-#include "HelloWorldScene.h"
-#include "AppMacros.h"
+#!/bin/bash
 
-USING_NS_CC;
+# exit this script if any commmand fails
+set -e
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COCOS2DX_ROOT="$DIR"/../..
+HOST_NAME=""
 
-Scene* HelloWorld::scene()
+function install_android_ndk()
 {
-     return HelloWorld::create();
+    mkdir -p $HOME/bin
+    cd $HOME/bin
+
+    # Download android ndk
+    if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+        HOST_NAME="darwin"
+    else
+        HOST_NAME="linux"
+    fi
+
+    FILE_NAME=android-ndk-r10d-${HOST_NAME}-x86_64.bin
+
+    echo "Download ${FILE_NAME} ..."
+    curl -O http://dl.google.com/android/ndk/${FILE_NAME}
+    sudo chmod +x ./$FILE_NAME
+    echo "Decompress ${FILE_NAME} ..."
+    ./$FILE_NAME > /dev/null
+    # Rename ndk
+    mv android-ndk-r10d android-ndk
 }
 
-// on "init" you need to initialize your instance
-bool HelloWorld::init()
+function install_linux_environment()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
-    
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto origin = Director::getInstance()->getVisibleOrigin();
+    mkdir -p $HOME/bin
+    pushd $HOME/bin
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+    echo "GCC version: `gcc --version`"
+    # install new version cmake
+    CMAKE_VERSION="3.7.2"
+    CMAKE_DOWNLOAD_URL="https://cmake.org/files/v3.7/cmake-${CMAKE_VERSION}.tar.gz"
+    echo "Download ${CMAKE_DOWNLOAD_URL}"
+    curl -O ${CMAKE_DOWNLOAD_URL}
+    tar -zxf "cmake-${CMAKE_VERSION}.tar.gz"
+    cd "cmake-${CMAKE_VERSION}"
+    ./configure > /dev/null
+    make -j2 > /dev/null
+    sudo make install > /dev/null
+    echo "CMake Version: `cmake --version`"
+    cd ..
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
-    
-    closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, nullptr);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-    
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-    
-    auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", TITLE_FONT_SIZE);
-    
-    // position the label on the center of the screen
-    label->setPosition(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - label->getContentSize().height);
-
-    // add the label as a child to this layer
-    this->addChild(label, 1);
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize / 2) + origin);
-
-    // add the sprite as a child to this layer
-    this->addChild(sprite);
-    
-    return true;
+    # install new version binutils
+    BINUTILS_VERSION="2.27"
+    BINUTILS_URL="http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz"
+    echo "Download ${BINUTILS_URL}"
+    curl -O ${BINUTILS_URL}
+    tar -zxf "binutils-${BINUTILS_VERSION}.tar.gz"
+    cd "binutils-${BINUTILS_VERSION}"
+    ./configure > /dev/null
+    make -j2 > /dev/null
+    sudo make install > /dev/null
+    echo "ld Version: `ld --version`"
+    echo "which ld: `which ld`"
+    sudo rm /usr/bin/ld
+    popd
+    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
 }
 
-void HelloWorld::menuCloseCallback(Ref* sender)
+function download_deps()
 {
-    Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
+    # install dpes
+    pushd $COCOS2DX_ROOT
+    python download-deps.py -r=yes
+    popd
 }
+
+function install_android_environment()
+{
+    sudo apt-get install ant -y
+    
+    # todo: cocos should add parameter to avoid promt
+    sudo mkdir $HOME/.cocos
+    sudo touch $HOME/.cocos/local_cfg.json
+    echo '{"agreement_shown": true}' | sudo tee $HOME/.cocos/local_cfg.json
+}
+
+function install_python_module_for_osx()
+{
+    sudo easy_install pip
+    sudo pip install PyYAML
+    sudo pip install Cheetah
+}
+
+# set up environment according os and target
+function install_environement_for_pull_request()
+{
+    # use NDK's clang to generate binding codes
+    install_android_ndk
+    download_deps
+
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+        if [ "$BUILD_TARGET" == "linux" ]; then
+            install_linux_environment
+        fi
+
+        if [ "$BUILD_TARGET" == "android" ]; then
+            install_android_environment
+        fi
+    fi
+
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        install_python_module_for_osx
+    fi
+}
+
+# should generate binding codes & cocos_files.json after merging
+function install_environement_for_after_merge()
+{
+    install_android_ndk
+    download_deps
+
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        install_python_module_for_osx
+    fi
+}
+
+# build pull request
+if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+    install_environement_for_pull_request
+fi
+
+# run after merging
+# - make cocos robot to send PR to cocos2d-x for new binding codes
+# - generate cocos_files.json for template
+if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    # only one job need to send PR, linux virtual machine has better performance
+    if [ $TRAVIS_OS_NAME == "linux" ] && [ $GEN_BINDING_AND_COCOSFILE == "true" ]; then
+        install_environement_for_after_merge
+    fi 
+fi
