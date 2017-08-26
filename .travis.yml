@@ -6,7 +6,7 @@ before_script:
    - mkdir cocosTest
    - cd cocosTest
    - git clone https://github.com/blazekyo/cocos2d-x.git
-   - cd cocos2d-x/tools/cocos2d-console
+   - cd cocos2d-x/tools
    - git clone https://github.com/cocos2d/cocos2d-console.git
    - cd cocos2d-console/bin
 script:
