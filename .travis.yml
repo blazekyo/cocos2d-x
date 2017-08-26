@@ -1,7 +1,7 @@
 dist: precise
 #!/bin/bash
 
-# exit this script if any commmand fails
+# exit this script if any commmand fails occured
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
