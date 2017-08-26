@@ -10,4 +10,4 @@ before_script:
    - git clone https://github.com/cocos2d/cocos2d-console.git
    - cd cocos2d-console/bin
 script:
-   - python cocos
+   - cocos
