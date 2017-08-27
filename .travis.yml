@@ -24,6 +24,6 @@ matrix:
 script:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake cocos2d-x/tests/cpp-tests
   - make
   - ctest
