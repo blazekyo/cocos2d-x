@@ -1,6 +1,5 @@
 language: cpp
 script:
-  - wget https://raw.githubusercontent.com/rafaelpierri/gtest-and-cocos2d-x-on-a-blender/master/gtestOnCocos2d.sh./gtestOnCocos2d.sh
   - git clone https://github.com/blazekyo/cocos2d-x.git
   - git submodule update --init
   - cd cocos2d-x
