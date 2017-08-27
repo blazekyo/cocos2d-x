@@ -88,6 +88,22 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
   ${CMAKE_CURRENT_SOURCE_DIR}/external
+  
+--- CMakeLists.txt.origin   2016-10-29 11:21:14.000000000 +0400
++++ CMakeLists.txt  2016-10-29 11:21:28.000000000 +0400
+@@ -122,6 +122,12 @@
+ )
+ endif( WIN32 )
+
++if ( MACOSX )
++  include_directories(
++  ${COCOS2D_ROOT}/external/glfw3/include/mac
++  )
++endif ( MACOSX )
++
+ set(GAME_SRC
+   Classes/AppDelegate.cpp
+   Classes/HelloWorldScene.cpp
 )
 
 if(USE_PREBUILT_LIBS)
