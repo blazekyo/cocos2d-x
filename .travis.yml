@@ -21,7 +21,6 @@ matrix:
 
 script:
 - git clone git://github.com/cocos2d/cocos2d-iphone.git
-- cd cocos2d-iphone
-- git checkout develop-v2
 - git submodule update --init
-- open cocos2d-tests-ios.xcodeproj
+- cd cocos2d-x/tools/cocos2d-console/bin
+- cocos
