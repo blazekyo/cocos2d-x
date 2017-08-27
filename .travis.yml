@@ -21,6 +21,6 @@ matrix:
 
 script:
   - git clone https://github.com/blazekyo/cocos2d-x.git
-  - cmake cocos2d-x/tests/cpp-empty-test/CMakeLists.txt
+  - cmake cocos2d-x/tests/cpp-tests/CMakeLists.txt
   - make 
   - ctest
