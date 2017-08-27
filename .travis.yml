@@ -10,7 +10,7 @@ script:
   - cd cocos2d-x
   - yes | python download-deps.py
   - git submodule update --init
-  - python setup.py
+  - yes | python setup.py
   - cd build
   - ./install-deps-linux.sh
   - cmake ..
