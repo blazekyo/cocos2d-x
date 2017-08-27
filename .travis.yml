@@ -1,8 +1,6 @@
 language: 
  -cpp
  -python
-os:
-  -osx
 script:
   - git clone https://github.com/blazekyo/cocos2d-x.git
   - git submodule update --init
