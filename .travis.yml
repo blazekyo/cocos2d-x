@@ -18,12 +18,10 @@ matrix:
 
     # Build with OS X and clang.
     # The default clang compiler supports C++11.
-    - os: osx
-      env: COMPILER=clang++
 
 script:
   - mkdir build
   - cd build
-  - cmake cocos2d-x/tests/cpp-tests
-  - make
+  - cmake
+  - make cocos2d-x/tests/cpp-tests
   - ctest
