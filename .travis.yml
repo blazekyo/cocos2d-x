@@ -8,6 +8,7 @@ script:
   - git submodule update --init
   - cd cocos2d-x
   - yes | python download-deps.py
+  - install-deps-linux.sh
   - cmake -Dtest=ON ..
   - make
   - make test
