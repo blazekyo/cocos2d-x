@@ -3,6 +3,7 @@ before script:
   - git clone https://github.com/blazekyo/cocos2d-x.git
   - git module update --init
 script:
+  - cd cocos2d-x
   - cmake .. -G "Unix Makefiles" -Dtest=ON
   - cmake build
   - ctest .
