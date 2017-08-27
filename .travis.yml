@@ -1,11 +1,12 @@
 language: 
  -cpp
  -python
+python:2.7
 script:
   - git clone https://github.com/blazekyo/cocos2d-x.git
   - git submodule update --init
-  - download-deps.py
   - cd cocos2d-x
+  - python download-deps.py
   - cmake -Dtest=ON ..
   - make
   - make test
