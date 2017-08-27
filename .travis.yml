@@ -7,7 +7,7 @@ script:
   - git clone https://github.com/blazekyo/cocos2d-x.git
   - git submodule update --init
   - cd cocos2d-x
-  - python download-deps.py
+  - yes | python download-deps.py
   - cmake -Dtest=ON ..
   - make
   - make test
