@@ -20,7 +20,8 @@ matrix:
     # The default clang compiler supports C++11.
 
 script:
-  - git clone https://github.com/blazekyo/cocos2d-x.git
-  - cmake cocos2d-x/tests/cpp-tests/CMakeLists.txt
-  - make 
-  - ctest
+- git clone git://github.com/cocos2d/cocos2d-iphone.git
+- cd cocos2d-iphone
+- git checkout develop-v2
+- git submodule update --init
+- open cocos2d-tests-ios.xcodeproj
