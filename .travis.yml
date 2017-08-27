@@ -11,7 +11,7 @@ script:
   - cd build
   - ./install-deps-linux.sh
   - cd --
-  -cd cocos2d-x
+  - cd cocos2d-x
   - cmake -Dtest=ON ..
   - make
   - make test
