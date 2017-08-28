@@ -22,6 +22,5 @@ addons:
       name: "blazekyo/cocos2d-x"
       description: "code analysis test using coverity"
     notification_email: weijie22495@gmail.com
-    build_command_prepend: "--dist:trusty --sudo:required --comptype gcc --compiler gcc"
     build_command:   "./build_command.sh"
     branch_pattern: coverity_scan
