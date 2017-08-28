@@ -1,0 +1,13 @@
+  - git clone https://github.com/blazekyo/cocos2d-x.git
+  - cd cocos2d-x
+  - yes | python download-deps.py
+  - git submodule update --init
+  - yes | python setup.py
+  - cd tools/travis-scripts
+  - ls -la
+  - yes | ./install_glfw.sh
+  - cd -
+  - cd build
+  - ./install-deps-linux.sh
+  - cmake ..
+  - make
