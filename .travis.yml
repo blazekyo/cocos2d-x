@@ -13,7 +13,7 @@ script:
   - yes | python setup.py
   - cd tools/travis-scripts
   - ls -la
-  - yes | install_glfw.sh
+  - yes | ./install_glfw.sh
   - cd -
   - cd build
   - ./install-deps-linux.sh
