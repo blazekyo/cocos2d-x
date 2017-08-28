@@ -5,6 +5,7 @@ python:
 - "2.7"
 compiler:
  - gcc
+## Solved glfw not found problem
 dist: trusty 
 sudo: required
 script:
@@ -19,5 +20,7 @@ script:
   - cd -
   - cd build
   - ./install-deps-linux.sh
-  - cmake cocos2d-x/tests/cpp-empty-test
+  - cd -
+  - cd cocos2d-x/tests/cpp-empty-test
+  - cmake
   - make
