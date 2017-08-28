@@ -19,5 +19,5 @@ script:
   - cd -
   - cd build
   - ./install-deps-linux.sh
-  - cmake ..
+  - cmake cocos2d-x/tests/cpp-empty-test
   - make
