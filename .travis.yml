@@ -25,10 +25,3 @@ addons:
     build_command_prepend: "--dist:trusty --sudo:required --comptype gcc --compiler gcc"
     build_command:   "./build_command.sh"
     branch_pattern: coverity_scan
-## Solved glfw not found problem
-script:
-  - if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]];
-      then
-        echo "Don't build on coverty_scan branch.";
-        exit 0;
-    fi
