@@ -20,7 +20,5 @@ script:
   - cd -
   - cd build
   - ./install-deps-linux.sh
-  - cd -
-  - cd tests
-  - cmake cpp-empty-test
+  - cmake ..
   - make
