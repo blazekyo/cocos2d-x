@@ -15,7 +15,6 @@ script:
   - git submodule update --init
   - yes | python setup.py
   - cd tools/travis-scripts
-  - ls -la
   - yes | ./install_glfw.sh
   - cd -
   - cd build
