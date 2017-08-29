@@ -46,7 +46,7 @@ Which means that
 * otherwise it will the add environment variables into ~/.bash_login if it exists
 * otherwise it will the add environment variables into ~/.profile if it exists
 
-Will create ~/.bash_profile when none of them exist, and add environment variables into it.
+Will create ~/.bash_profile when none of them exist, and add environment variables into it..
 '''
 
 import os
