@@ -23,7 +23,11 @@ Steps to report a bug:
     * some pseudocode
     * resources link if needed
 
+## Notes
 
+It is better to make a separate branch of cocos2d-x, and make your changes in the newly created branch. 
+
+Test your code thoroughly before submitting any pull request to minimise errors in the main branch.
 ## Submitting patches
 
 If you want to contribute code, please follow these steps:
